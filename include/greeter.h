@@ -1,10 +1,10 @@
 #pragma once
 
-#include "component.h"
+#include "node.h"
 
 struct greeter_data {
 	char* greeting;
 };
 
-struct component* create_greeter(char* greeting);
+struct node* create_greeter(char* greeting);
 

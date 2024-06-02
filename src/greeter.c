@@ -3,25 +3,25 @@
 
 #include "greeter.h"
 
-static void start(struct component* greeter) {
+static void start(struct node* greeter) {
 	printf("%s\n", ((struct greeter_data*)(greeter->data))->greeting);
 }
 
-static void destroy(struct component* greeter) {
+static void destroy(struct node* greeter) {
 	free(((struct greeter_data*)(greeter->data))->greeting);
 	free(greeter->data);
-	free(greeter);
+	node_base_destroy(greeter);
 }
 
-struct component* create_greeter(char* greeting) {
-	struct component* new_greeter = malloc(sizeof(struct component));
-	struct greeter_data* data = malloc(sizeof(struct greeter_data));
+struct node* create_greeter(char* greeting) {
+	struct node* new_greeter = calloc(1, sizeof(struct node));
+
+	struct greeter_data* data = calloc(1, sizeof(struct greeter_data));
 	data->greeting = greeting;
 
 	new_greeter->start   = start;
-	new_greeter->process = NULL;
 	new_greeter->destroy = destroy;
-	new_greeter->data = data;
+	new_greeter->data    = data;
 
 	return new_greeter;
 }
