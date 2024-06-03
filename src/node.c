@@ -2,6 +2,8 @@
 
 #include "node.h"
 
+unsigned int type_count = 0;
+
 void node_base_destroy(struct node* node) {
 	struct node* child = node->first_child;
 	while (child != NULL) {
