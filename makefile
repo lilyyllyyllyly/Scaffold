@@ -14,7 +14,7 @@ OUT_DIR=lib
 
 SOURCES=$(wildcard ${SRC_DIR}/*.c)
 
-OUTPUT=libengine.a
+OUTPUT=libscaffold.a
 
 final: compile move assemble clean
 debug: enable-debug final
