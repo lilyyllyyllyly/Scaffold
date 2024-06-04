@@ -16,7 +16,7 @@ SOURCES=$(wildcard ${SRC_DIR}/*.c)
 
 OUTPUT=libengine.a
 
-final: compile move assemble
+final: compile move assemble clean
 debug: enable-debug final
 
 enable-debug:
