@@ -2,7 +2,11 @@
 
 #include "node.h"
 
-unsigned int type_count = 0;
+int type_count = 0;
+
+int node_new_type() {
+	return type_count++;
+}
 
 void node_base_destroy(struct node* node) {
 	struct node* child = node->first_child;
