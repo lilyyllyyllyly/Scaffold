@@ -5,7 +5,6 @@
 #define NODE_TYPE_UNASSIGNED -1
 
 struct node {
-	void (*start)(struct node*);
 	void (*process)(struct node*);
 	void (*destroy)(struct node*);
 
@@ -18,6 +17,7 @@ struct node {
 };
 
 int node_new_type();
-void node_base_destroy(struct node* node);
 void node_add_child(struct node* parent, struct node* child);
+struct node* node_base_create(int* type_var, void (*process)(struct node*), void (*destroy)(struct node*), void* data);
+void node_base_destroy(struct node* node);
 
