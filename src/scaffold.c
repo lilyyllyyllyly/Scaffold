@@ -5,11 +5,16 @@
 
 int root_type = NODE_TYPE_UNASSIGNED;
 
+struct scaffold_vector2 scaffold_vector2_add(struct scaffold_vector2 a, struct scaffold_vector2 b) {
+	return (struct scaffold_vector2){a.x + b.x, a.y + b.y};
+}
+
 // Creates a root node and returns it
 struct node* scaffold_initialize() {
 	return node_base_create(
 		&root_type,
 		NULL,
+		(struct scaffold_vector2){0, 0},
 		NULL,
 		NULL
 	);
@@ -17,6 +22,11 @@ struct node* scaffold_initialize() {
 
 // TODO: account for process function messing with direct children of branch
 void scaffold_process_branch(struct node* branch) {
+	branch->global_pos = branch->local_pos;
+	if (branch->parent != NULL) {
+		branch->global_pos = scaffold_vector2_add(branch->global_pos, branch->parent->global_pos);
+	}
+
 	if (branch->process != NULL) {
 		branch->process(branch);
 	}
