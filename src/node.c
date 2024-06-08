@@ -13,10 +13,15 @@ struct scaffold_vector2 scaffold_update_node_pos(struct node* node) {
 	node->global_pos = node->local_pos;
 
 	if (node->parent != NULL) {
-		node->global_pos = scaffold_vector2_add(node->global_pos, scaffold_update_node_pos(node));
+		node->global_pos = scaffold_vector2_add(node->global_pos, scaffold_update_node_pos(node->parent));
 	}
 
 	return node->global_pos;
+}
+
+void node_set_global_pos(struct node* node, struct scaffold_vector2 pos) {
+	scaffold_update_node_pos(node);
+	node->local_pos = scaffold_vector2_add(node->local_pos, scaffold_vector2_sub(pos, node->global_pos));
 }
 
 void node_add_child(struct node* parent, struct node* child) {

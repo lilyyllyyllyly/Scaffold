@@ -1,13 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "vector.h"
 #include "node.h"
 
 int root_type = NODE_TYPE_UNASSIGNED;
-
-struct scaffold_vector2 scaffold_vector2_add(struct scaffold_vector2 a, struct scaffold_vector2 b) {
-	return (struct scaffold_vector2){a.x + b.x, a.y + b.y};
-}
 
 // Creates a root node and returns it
 struct node* scaffold_initialize() {
