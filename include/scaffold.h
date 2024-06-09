@@ -1,7 +1,7 @@
 #pragma once
 
-#include "node.h"
+#include "scaffold_node.h"
 
-struct node* scaffold_initialize();
-void scaffold_process_branch(struct node* branch);
+struct scaffold_node* scaffold_initialize();
+void scaffold_process_branch(struct scaffold_node* branch, double delta);
 
