@@ -16,6 +16,7 @@ typedef struct scaffold_node {
 	struct scaffold_node* parent;
 	struct scaffold_node* first_child;
 	struct scaffold_node* next_sibling;
+	struct scaffold_node* prev_sibling;
 } scaffold_node;
 
 scaffold_vector2 scaffold_node_update_pos(scaffold_node* scaffold_node);

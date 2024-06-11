@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 
 #include "scaffold.h"
@@ -28,6 +27,7 @@ void scaffold_node_set_global_pos(scaffold_node* node, scaffold_vector2 pos) {
 void scaffold_node_add_child(scaffold_node* parent, scaffold_node* child) {
 	child->parent = parent;
 	child->next_sibling = parent->first_child;
+	if (parent->first_child != NULL) parent->first_child->prev_sibling = child;
 	parent->first_child = child;
 }
 
@@ -48,7 +48,10 @@ scaffold_node* scaffold_node_create(int* type_var, void* data, void (*process)(s
 }
 
 void scaffold_node_destroy(scaffold_node* node) {
-	printf("{ [%d]\n", node->type);
+	if (node->next_sibling != NULL) node->next_sibling->prev_sibling = node->prev_sibling;
+	if (node->prev_sibling != NULL) node->prev_sibling->next_sibling = node->next_sibling;
+	else if (node->parent  != NULL) node->parent->first_child = node->next_sibling;
+
 	scaffold_node* child = node->first_child;
 	while (child != NULL) {
 		scaffold_node* next_child = child->next_sibling;
@@ -57,6 +60,5 @@ void scaffold_node_destroy(scaffold_node* node) {
 	}
 
 	free(node);
-	puts("}");
 }
 
