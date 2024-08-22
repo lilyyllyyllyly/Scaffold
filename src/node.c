@@ -44,6 +44,8 @@ scaffold_node* scaffold_node_create(int* type_var, void* data, void (*process)(s
 	new_node->process = process;
 	new_node->destroy = destroy == NULL? scaffold_node_destroy : destroy;
 
+	new_node->destroy_queued = 0;
+
 	return new_node;
 }
 

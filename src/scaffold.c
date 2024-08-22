@@ -60,6 +60,8 @@ void scaffold_process_cleanup(scaffold_node* root, double delta) {
 // Pushes a node to the top of the destroy list to be destroyed after process
 // Technically not a queue but no one needs to know that
 void scaffold_queue_destroy(scaffold_node* node) {
+	if (node->destroy_queued) return;
+	node->destroy_queued = 1;
 	destroy_list = scaffold_list_insert(destroy_list, node);
 }
 

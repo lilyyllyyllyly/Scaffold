@@ -13,6 +13,8 @@ typedef struct scaffold_node {
 	void (*process)(struct scaffold_node*, double);
 	void (*destroy)(struct scaffold_node*);
 
+	int destroy_queued;
+
 	struct scaffold_node* parent;
 	struct scaffold_node* first_child;
 	struct scaffold_node* next_sibling;
