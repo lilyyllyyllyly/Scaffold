@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "scaffold_list.h"
@@ -54,6 +55,13 @@ void scaffold_list_destroy(scaffold_list* list) {
 		scaffold_list* next = curr->next;
 		free(curr);
 		curr = next;
+	}
+}
+
+void scaffold_list_debug(scaffold_list* list) {
+	printf("DEBUG: printing scaffold list %p contents\n", (void*)list);
+	for (scaffold_list* elem = list; elem != NULL; elem = elem->next) {
+		printf("DEBUG: elem %p - prev: %p | next: %p\n", (void*)elem, (void*)(elem->prev), (void*)(elem->next));
 	}
 }
 
