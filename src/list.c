@@ -4,9 +4,38 @@
 
 scaffold_list* scaffold_list_insert(scaffold_list* list, void* new_data) {
 	scaffold_list* new_elem = calloc(1, sizeof(scaffold_list));
+
 	new_elem->data = new_data;
 	new_elem->next = list;
-	if (list != NULL) list->prev = new_elem;
+
+	if (list != NULL) {
+		if (list->prev != NULL) {
+			new_elem->prev = list->prev;
+			list->prev->next = new_elem;
+		}
+		list->prev = new_elem;
+	}
+
+	return new_elem;
+}
+
+scaffold_list* scaffold_list_append(scaffold_list* list, void* new_data) {
+	if (list == NULL) {
+		return NULL; // for append list cant be null, insert must be called instead
+	}
+
+	scaffold_list* new_elem = calloc(1, sizeof(scaffold_list));
+
+	new_elem->data = new_data;
+	new_elem->prev = list;
+
+	if (list->next != NULL) {
+		list->next->prev = new_elem;
+		new_elem->next = list->next;
+	}
+
+	list->next = new_elem;
+
 	return new_elem;
 }
 
