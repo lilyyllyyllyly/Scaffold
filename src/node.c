@@ -50,6 +50,11 @@ scaffold_node* scaffold_node_create(int* type_var, void* data, void (*process)(s
 }
 
 void scaffold_node_destroy(scaffold_node* node) {
+	// remove node from destroy queue if it was queued
+	if (node->destroy_queued) {
+		scaffold_dequeue_destroy(node);
+	}
+
 	if (node->next_sibling != NULL) node->next_sibling->prev_sibling = node->prev_sibling;
 	if (node->prev_sibling != NULL) node->prev_sibling->next_sibling = node->next_sibling;
 	else if (node->parent  != NULL) node->parent->first_child = node->next_sibling;

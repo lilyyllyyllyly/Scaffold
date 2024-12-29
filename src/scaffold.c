@@ -46,12 +46,12 @@ void scaffold_process_cleanup(scaffold_node* root, double delta) {
 
 	scaffold_list* elem = destroy_list;
 	while (elem != NULL) {
-		scaffold_list* next_elem = elem->next;
-
 		scaffold_node* node = (scaffold_node*)(elem->data);
+		node->destroy_queued = 0;
 		node->destroy(node);
-		free(elem);
 
+		scaffold_list* next_elem = elem->next;
+		free(elem);
 		elem = next_elem;
 	}
 	destroy_list = NULL;
@@ -63,5 +63,21 @@ void scaffold_queue_destroy(scaffold_node* node) {
 	if (node->destroy_queued) return;
 	node->destroy_queued = 1;
 	destroy_list = scaffold_list_insert(destroy_list, node);
+}
+
+// Removes a node from the destroy queue
+void scaffold_dequeue_destroy(scaffold_node* node) {
+	if (!node->destroy_queued) return;
+
+	// find node's element in the destroy queue
+	scaffold_list* elem = destroy_list;
+	while(elem != NULL) {
+		if ((scaffold_node*)(elem->data) == node) {
+			destroy_list = scaffold_list_delete_element(destroy_list, elem);
+			return;
+		}
+
+		elem = elem->next;
+	}
 }
 
